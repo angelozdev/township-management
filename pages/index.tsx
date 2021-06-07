@@ -21,9 +21,9 @@ function Home({ goods }: Props) {
         <ul>
           {goods.map((good) => (
             <li key={good.id}>
-              <p>{good.name}</p>
-              <p>Cost: {good.cost}</p>
-              <p>Level: {good.level}</p>
+              <p>
+                {good.name} - {good.id}
+              </p>
             </li>
           ))}
         </ul>
