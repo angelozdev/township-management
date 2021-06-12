@@ -1,5 +1,3 @@
-import firebase from "firebase/app";
-
 export interface Good {
   cost: number;
   dealer: number;
@@ -19,7 +17,7 @@ export interface Feed {
   level: number;
   materials: [
     {
-      id: firebase.firestore.DocumentReference;
+      id: string;
       quantity: number;
     }
   ];

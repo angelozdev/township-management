@@ -1,13 +1,16 @@
 import axios from "axios";
 import Head from "next/head";
 import { GetStaticProps } from "next";
-import { Good } from "../types";
+import { Feed, Good } from "../types";
 
 interface Props {
   goods: Good[];
+  feeds: Feed[];
 }
 
-function Home({ goods }: Props) {
+function Home({ goods, feeds }: Props) {
+  console.log(feeds);
+
   return (
     <div>
       <Head>
@@ -35,15 +38,19 @@ function Home({ goods }: Props) {
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const { data: goods } = await axios.get("http://localhost:3000/api/goods");
+    const { data: feeds } = await axios.get("http://localhost:3000/api/feeds");
+
     return {
       props: {
         goods,
+        feeds,
       },
     };
   } catch (error) {
     return {
       props: {
         goods: [],
+        feeds: [],
       },
     };
   }

@@ -1,25 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { database } from "../../../firebase/client";
-import { Feed } from "../../../types";
-// import { feeds } from "../../../farm_products_and_feeds";
 
 function getAllFeeds(_: NextApiRequest, res: NextApiResponse<any>) {
   return async () => {
     try {
       const { docs } = await database.collection("feeds").get();
 
-      const feeds = docs
-        .filter((d) => d.exists)
-        .map((feed) => {
-          const { materials, ...rest } = feed.data() as Feed;
-          return {
-            materials: materials.map(({ id, quantity }) => ({
-              quantity,
-              id: id.id,
-            })),
-            rest,
-          };
-        });
+      const feeds = docs.filter((d) => d.exists).map((feed) => feed.data());
 
       res.status(200).json(feeds);
     } catch (error) {
@@ -29,7 +16,7 @@ function getAllFeeds(_: NextApiRequest, res: NextApiResponse<any>) {
 }
 
 function addFeed(_: NextApiRequest, res: NextApiResponse<any>) {
-  return async (data: any) => {
+  return (data: any) => {
     database
       .collection("feeds")
       .add(data)
