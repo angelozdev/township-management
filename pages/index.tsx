@@ -1,6 +1,7 @@
 import axios from "axios";
 import Head from "next/head";
 import { GetStaticProps } from "next";
+import { Navbar } from "components";
 import { Feed, Good } from "../types";
 
 interface Props {
@@ -19,6 +20,8 @@ function Home({ goods, feeds }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Navbar />
+
       <main>
         {goods.length === 0 && <p>No items</p>}
         <ul>
@@ -36,24 +39,26 @@ function Home({ goods, feeds }: Props) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  try {
-    const { data: goods } = await axios.get("http://localhost:3000/api/goods");
-    const { data: feeds } = await axios.get("http://localhost:3000/api/feeds");
+  const { data: goods } = await axios
+    .get("http://localhost:3000/api/goods")
+    .catch((error) => {
+      console.error(error);
+      return { data: [] };
+    });
 
-    return {
-      props: {
-        goods,
-        feeds,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        goods: [],
-        feeds: [],
-      },
-    };
-  }
+  const { data: feeds } = await axios
+    .get("http://localhost:3000/api/feeds")
+    .catch((error) => {
+      console.error(error);
+      return { data: [] };
+    });
+
+  return {
+    props: {
+      goods,
+      feeds,
+    },
+  };
 };
 
 export default Home;
