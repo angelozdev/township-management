@@ -1,7 +1,12 @@
 import { PropsWithChildren } from "react";
 
-function Wrapper({ children }: PropsWithChildren<{}>) {
-  return <div className="container mx-auto px-2">{children}</div>;
+interface Props {
+  size?: "sm" | "md" | "lg" | "xl" | "2xl";
+}
+
+function Wrapper({ children, size }: PropsWithChildren<Props>) {
+  const maxWidth = size ? `max-w-${size}` : "";
+  return <div className={`container mx-auto px-2 ${maxWidth}`}>{children}</div>;
 }
 
 export default Wrapper;

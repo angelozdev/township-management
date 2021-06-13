@@ -6,7 +6,9 @@ function getAllFeeds(_: NextApiRequest, res: NextApiResponse<any>) {
     try {
       const { docs } = await database.collection("feeds").get();
 
-      const feeds = docs.filter((d) => d.exists).map((feed) => feed.data());
+      const feeds = docs
+        .filter((d) => d.exists)
+        .map((feed) => ({ ...feed.data(), id: feed.id }));
 
       res.status(200).json(feeds);
     } catch (error) {

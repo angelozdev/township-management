@@ -20,7 +20,7 @@ function Layout({
 
       <Navbar />
 
-      <main>{children}</main>
+      <main className="my-4">{children}</main>
     </Fragment>
   );
 }

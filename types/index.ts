@@ -12,6 +12,7 @@ export interface Good {
 }
 
 export interface Feed {
+  id: string;
   dealer: number;
   help: number;
   level: number;
