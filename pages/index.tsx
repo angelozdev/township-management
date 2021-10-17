@@ -1,47 +1,13 @@
-import axios from "axios";
-import { GetStaticProps } from "next";
+import { Button } from "@chakra-ui/react";
 
-import { Layout, Wrapper, AddProductsForm } from "components";
-import { Feed, Good } from "types";
-
-interface Props {
-  goods: Good[];
-  feeds: Feed[];
-}
-
-function Home({ goods, feeds }: Props) {
+function Home() {
   return (
-    <Layout>
-      <Wrapper size="md">
-        <div className="border p-4 rounded-md">
-          <AddProductsForm goods={goods} feeds={feeds} />
-        </div>
-      </Wrapper>
-    </Layout>
+    <div>
+      <Button colorScheme="purple" size="sm">
+        Hola mundo
+      </Button>
+    </div>
   );
 }
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const { data: goods } = await axios
-    .get("http://localhost:3000/api/goods")
-    .catch((error) => {
-      console.error(error);
-      return { data: [] };
-    });
-
-  const { data: feeds } = await axios
-    .get("http://localhost:3000/api/feeds")
-    .catch((error) => {
-      console.error(error);
-      return { data: [] };
-    });
-
-  return {
-    props: {
-      goods,
-      feeds,
-    },
-  };
-};
 
 export default Home;
