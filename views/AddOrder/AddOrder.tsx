@@ -18,9 +18,37 @@ import {
 } from "@chakra-ui/react";
 import { farmProducts } from "farm_products_and_feeds";
 import { Layout } from "./components";
-import prettyMS from "pretty-ms";
 
 function AddOrder() {
+  const rtf = new Intl.RelativeTimeFormat("en", {
+    style: "long",
+    localeMatcher: "best fit",
+  });
+
+  const prettyTime = (time: number) => {
+    let format: Intl.RelativeTimeFormatUnit = "seconds";
+    let bestTime = time;
+
+    if (time >= 60 && time < 60 * 60) {
+      format = "minutes";
+      bestTime = time / 60;
+    } else if (time >= 60 * 60 && time < 60 * 60 * 24) {
+      format = "hours";
+      bestTime = time / (60 * 60);
+    } else if (time >= 60 * 60 * 24 && time < 60 * 60 * 24 * 7) {
+      format = "days";
+      bestTime = time / (60 * 60 * 24);
+    } else if (time >= 60 * 60 * 24 * 7 && time < 60 * 60 * 24 * 30) {
+      format = "weeks";
+      bestTime = time / (60 * 60 * 24 * 7);
+    } else if (time >= 60 * 60 * 24 * 30) {
+      format = "months";
+      bestTime = time / (60 * 60 * 24 * 30);
+    }
+
+    return rtf.format(bestTime, format).replace(/in/i, "");
+  };
+
   return (
     <Layout>
       <Box as="section">
@@ -59,7 +87,7 @@ function AddOrder() {
                                   variant="subtle"
                                   colorScheme="teal"
                                 >
-                                  {prettyMS(time * 1000)}
+                                  {prettyTime(time)}
                                 </Badge>
                               </Heading>
                               <Text>${sell_price}</Text>
