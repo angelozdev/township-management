@@ -1,11 +1,7 @@
-import { Box, Button, Container } from "@chakra-ui/react";
+import { Home } from "@views";
 
-function Home() {
-  return (
-    <Box as="section">
-      <Container maxW="container.xl">Hola mundo</Container>
-    </Box>
-  );
+function HomePage() {
+  return <Home />;
 }
 
-export default Home;
+export default HomePage;
