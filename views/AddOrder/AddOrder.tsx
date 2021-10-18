@@ -1,54 +1,23 @@
 import {
+  Avatar,
   Box,
+  Checkbox,
   Container,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanel,
-  TabPanels,
+  Heading,
   Stack,
   StackItem,
-  Avatar,
-  StatNumber,
-  Stat,
-  StatLabel,
-  Heading,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
-  Badge,
 } from "@chakra-ui/react";
 import { farmProducts } from "farm_products_and_feeds";
+import { prettyTime } from "./utils";
 import { Layout } from "./components";
 
 function AddOrder() {
-  const rtf = new Intl.RelativeTimeFormat("en", {
-    style: "long",
-    localeMatcher: "best fit",
-  });
-
-  const prettyTime = (time: number) => {
-    let format: Intl.RelativeTimeFormatUnit = "seconds";
-    let bestTime = time;
-
-    if (time >= 60 && time < 60 * 60) {
-      format = "minutes";
-      bestTime = time / 60;
-    } else if (time >= 60 * 60 && time < 60 * 60 * 24) {
-      format = "hours";
-      bestTime = time / (60 * 60);
-    } else if (time >= 60 * 60 * 24 && time < 60 * 60 * 24 * 7) {
-      format = "days";
-      bestTime = time / (60 * 60 * 24);
-    } else if (time >= 60 * 60 * 24 * 7 && time < 60 * 60 * 24 * 30) {
-      format = "weeks";
-      bestTime = time / (60 * 60 * 24 * 7);
-    } else if (time >= 60 * 60 * 24 * 30) {
-      format = "months";
-      bestTime = time / (60 * 60 * 24 * 30);
-    }
-
-    return rtf.format(bestTime, format).replace(/in/i, "");
-  };
-
   return (
     <Layout>
       <Box as="section">
@@ -68,31 +37,35 @@ function AddOrder() {
               <TabPanels>
                 <TabPanel p={0} my={5}>
                   <Stack as="ul" spacing={2}>
-                    {farmProducts.map(({ name, sell_price, time }) => {
+                    {farmProducts.map(({ name, sell_price, time }, index) => {
                       return (
-                        <StackItem
-                          key={name}
-                          p={4}
-                          rounded={8}
-                          shadow="md"
-                          as="li"
-                        >
-                          <Box display="flex" gridGap="3" alignItems="center">
-                            <Avatar name={name} size="md" />
-                            <Box>
-                              <Heading as="h3" size="sm">
-                                {name}{" "}
-                                <Badge
-                                  py="1"
-                                  variant="subtle"
-                                  colorScheme="teal"
+                        <StackItem key={name} rounded={8} shadow="md" as="li">
+                          <Checkbox colorScheme="teal" w="100%" p={4}>
+                            <Box display="flex" gridGap="4" alignItems="center">
+                              <Box ml={4}>
+                                <Avatar name={name} size="md" />
+                              </Box>
+
+                              <Box flexBasis="100px" flexGrow={1}>
+                                <Heading as="h3" size="sm">
+                                  {name}{" "}
+                                </Heading>
+                                <Text
+                                  fontSize="xs"
+                                  textTransform="uppercase"
+                                  color="gray.500"
                                 >
                                   {prettyTime(time)}
-                                </Badge>
-                              </Heading>
-                              <Text>${sell_price}</Text>
+                                </Text>
+                                <Text fontSize="xl">
+                                  <Text as="small" color="gray.600">
+                                    $
+                                  </Text>
+                                  <Text as="span">{sell_price}</Text>
+                                </Text>
+                              </Box>
                             </Box>
-                          </Box>
+                          </Checkbox>
                         </StackItem>
                       );
                     })}
