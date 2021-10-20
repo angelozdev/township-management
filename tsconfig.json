@@ -16,7 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@components": ["components/index.ts"],
-      "@views": ["views/index.ts"]
+      "@views": ["views/index.ts"],
+      "@constants": ["constants/index.ts"],
+      "@firebaseClient": ["firebase/client.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

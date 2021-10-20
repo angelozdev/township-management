@@ -13,11 +13,15 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import { farmProducts } from "farm_products_and_feeds";
 import { prettyTime } from "./utils";
 import { Layout } from "./components";
 
-function AddOrder() {
+// types
+interface Props {
+  crops: any[];
+}
+
+function AddOrder({ crops }: Props) {
   return (
     <Layout>
       <Box as="section">
@@ -37,9 +41,9 @@ function AddOrder() {
               <TabPanels>
                 <TabPanel p={0} my={5}>
                   <Stack as="ul" spacing={2}>
-                    {farmProducts.map(({ name, sell_price, time }, index) => {
+                    {crops.map(({ name, cost, time, id }) => {
                       return (
-                        <StackItem key={name} rounded={8} shadow="md" as="li">
+                        <StackItem key={id} rounded={8} shadow="md" as="li">
                           <Checkbox colorScheme="teal" w="100%" p={4}>
                             <Box display="flex" gridGap="4" alignItems="center">
                               <Box ml={4}>
@@ -47,7 +51,11 @@ function AddOrder() {
                               </Box>
 
                               <Box flexBasis="100px" flexGrow={1}>
-                                <Heading as="h3" size="sm">
+                                <Heading
+                                  as="h3"
+                                  size="sm"
+                                  textTransform="capitalize"
+                                >
                                   {name}{" "}
                                 </Heading>
                                 <Text
@@ -61,7 +69,7 @@ function AddOrder() {
                                   <Text as="small" color="gray.600">
                                     $
                                   </Text>
-                                  <Text as="span">{sell_price}</Text>
+                                  <Text as="span">{cost}</Text>
                                 </Text>
                               </Box>
                             </Box>
