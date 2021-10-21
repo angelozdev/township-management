@@ -1,36 +1,36 @@
-import { Avatar } from "@chakra-ui/avatar";
-import { Checkbox } from "@chakra-ui/checkbox";
-import { Box, Heading, StackItem, Text } from "@chakra-ui/layout";
+import {
+  Avatar,
+  Box,
+  Checkbox,
+  Heading,
+  StackItem,
+  Text,
+} from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { prettyTime } from "../utils";
-import {
-  addProduct,
-  removeProduct,
-} from "@redux/features/pre-order/preOrderSlice";
+import { addCrop, removeCrop } from "@redux/features/preOrder/preOrderSlice";
 
 // types
 import type { ChangeEvent } from "react";
 import type { RootState } from "@redux/types";
 
-interface Props {
-  name: CropFromServer["name"];
-  time: CropFromServer["time"];
-  cost: CropFromServer["cost"];
-  id: CropFromServer["id"];
-  sellingPrice: CropFromServer["selling_price"];
+interface Props extends Crop {
+  readonly id: CropFromServer["id"];
 }
 
-function ProductItem({ name, time, cost, id, sellingPrice }: Props) {
+function CropItem({ name, time, cost, id, sellingPrice }: Props) {
+  // hooks
   const dispatch = useDispatch();
-  const { products } = useSelector((state: RootState) => state.preOrder);
+  const { crops } = useSelector((state: RootState) => state.preOrder);
 
+  // helper functions
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
     const product: Crop = { name, time, cost, sellingPrice };
-    checked
-      ? dispatch(addProduct({ [id]: product }))
-      : dispatch(removeProduct(id));
+    checked ? dispatch(addCrop({ [id]: product })) : dispatch(removeCrop(id));
   };
+
+  const isFree = cost === 0;
 
   return (
     <StackItem rounded={8} shadow="md" as="li">
@@ -39,7 +39,7 @@ function ProductItem({ name, time, cost, id, sellingPrice }: Props) {
         onChange={handleCheckboxChange}
         w="100%"
         p={4}
-        defaultChecked={!!products[id]}
+        defaultChecked={!!crops[id]}
       >
         <Box display="flex" gridGap="4" alignItems="center">
           <Box ml={4}>
@@ -54,10 +54,11 @@ function ProductItem({ name, time, cost, id, sellingPrice }: Props) {
               {prettyTime(time)}
             </Text>
             <Text fontSize="xl">
-              <Text as="span" fontSize="xs" color="gray.600">
-                $
+              <Text as="span" fontSize="sm" color="gray.600">
+                {isFree ? "Free" : `$`}
               </Text>
-              <Text as="span">{cost}</Text>
+
+              {!isFree && <Text as="span">{cost}</Text>}
             </Text>
           </Box>
         </Box>
@@ -66,4 +67,4 @@ function ProductItem({ name, time, cost, id, sellingPrice }: Props) {
   );
 }
 
-export default ProductItem;
+export default CropItem;

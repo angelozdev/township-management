@@ -7,7 +7,7 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import { Layout, ProductList } from "./components";
+import { Layout, CropList } from "./components";
 
 // types
 interface Props {
@@ -18,7 +18,7 @@ function AddOrder({ crops }: Props) {
   return (
     <Layout>
       <Box as="section">
-        <Container maxW="container.xl">
+        <Container maxW="container.sm">
           <Box>
             <Tabs
               size="sm"
@@ -28,15 +28,15 @@ function AddOrder({ crops }: Props) {
               variant="solid-rounded"
             >
               <TabList>
-                <Tab>Source matrials</Tab>
+                <Tab>Crops</Tab>
                 <Tab>Goods</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel p={0} my={5}>
-                  <ProductList crops={crops} />
+                  <CropList crops={crops} />
                 </TabPanel>
                 <TabPanel p={0} my={5}>
-                  {"<ProductList crops={[...crops].reverse()} />"}
+                  <CropList crops={[...crops].reverse()} />
                 </TabPanel>
               </TabPanels>
             </Tabs>

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import preOrderReducer from "./features/pre-order/preOrderSlice";
+import preOrderReducer from "./features/preOrder/preOrderSlice";
 
 const store = configureStore({
   reducer: {
@@ -9,7 +9,7 @@ const store = configureStore({
 
 store.subscribe(() => {
   const state = store.getState();
-  console.log(state);
+  console.log({ ...state.preOrder.crops });
 });
 
 export default store;

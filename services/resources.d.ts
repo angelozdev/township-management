@@ -6,11 +6,8 @@ interface CropFromServer {
   readonly name: string;
 }
 
-interface Crop {
-  time: CropFromServer["time"];
-  cost: CropFromServer["cost"];
-  sellingPrice: CropFromServer["selling_price"];
-  name: CropFromServer["name"];
+interface Crop extends Omit<CropFromServer, "id" | "selling_price"> {
+  readonly sellingPrice: CropFromServer["selling_price"];
 }
 
 interface Crops {

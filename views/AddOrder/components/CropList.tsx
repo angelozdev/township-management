@@ -1,15 +1,15 @@
 import { Stack } from "@chakra-ui/layout";
-import { ProductItem } from "./";
+import { CropItem } from "./";
 
 interface Props {
   crops: CropFromServer[];
 }
 
-function ProductList({ crops }: Props) {
+function CropList({ crops }: Props) {
   return (
     <Stack as="ul" spacing={2}>
       {crops.map(({ id, cost, name, time, selling_price }) => (
-        <ProductItem
+        <CropItem
           key={id}
           cost={cost}
           name={name}
@@ -22,4 +22,4 @@ function ProductList({ crops }: Props) {
   );
 }
 
-export default ProductList;
+export default CropList;
