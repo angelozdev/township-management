@@ -11,7 +11,7 @@ import { Layout, ProductList } from "./components";
 
 // types
 interface Props {
-  crops: Crop[];
+  crops: CropFromServer[];
 }
 
 function AddOrder({ crops }: Props) {
@@ -36,7 +36,7 @@ function AddOrder({ crops }: Props) {
                   <ProductList crops={crops} />
                 </TabPanel>
                 <TabPanel p={0} my={5}>
-                  <ProductList crops={[...crops].reverse()} />
+                  {"<ProductList crops={[...crops].reverse()} />"}
                 </TabPanel>
               </TabPanels>
             </Tabs>

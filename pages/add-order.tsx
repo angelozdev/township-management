@@ -5,7 +5,7 @@ import { getCrops } from "services";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 
 interface Props {
-  crops: Crop[];
+  crops: CropFromServer[];
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {

@@ -1,36 +1,45 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Checkbox } from "@chakra-ui/checkbox";
 import { Box, Heading, StackItem, Text } from "@chakra-ui/layout";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { prettyTime } from "../utils";
-import { addProduct } from "@redux/features/pre-order/preOrderSlice";
+import {
+  addProduct,
+  removeProduct,
+} from "@redux/features/pre-order/preOrderSlice";
+
+// types
+import type { ChangeEvent } from "react";
+import type { RootState } from "@redux/types";
 
 interface Props {
-  name: Crop["name"];
-  time: Crop["time"];
-  cost: Crop["cost"];
+  name: CropFromServer["name"];
+  time: CropFromServer["time"];
+  cost: CropFromServer["cost"];
+  id: CropFromServer["id"];
+  sellingPrice: CropFromServer["selling_price"];
 }
 
-function ProductItem({ name, time, cost }: Props) {
+function ProductItem({ name, time, cost, id, sellingPrice }: Props) {
   const dispatch = useDispatch();
+  const { products } = useSelector((state: RootState) => state.preOrder);
+
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.target;
+    const product: Crop = { name, time, cost, sellingPrice };
+    checked
+      ? dispatch(addProduct({ [id]: product }))
+      : dispatch(removeProduct(id));
+  };
+
   return (
     <StackItem rounded={8} shadow="md" as="li">
       <Checkbox
         colorScheme="teal"
-        onChange={({ target }) =>
-          target.checked &&
-          dispatch(
-            addProduct({
-              name,
-              time,
-              cost,
-              id: Date.now().toString(),
-              selling_cost: 10000,
-            })
-          )
-        }
+        onChange={handleCheckboxChange}
         w="100%"
         p={4}
+        defaultChecked={!!products[id]}
       >
         <Box display="flex" gridGap="4" alignItems="center">
           <Box ml={4}>

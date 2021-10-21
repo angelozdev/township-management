@@ -1,23 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface PreOrderState {
-  products: Crop[];
+  products: Crops;
 }
 
 const initialState: PreOrderState = {
-  products: [],
+  products: {},
 };
 
 export const preOrderSlice = createSlice({
   name: "preOrder",
   initialState,
   reducers: {
-    addProduct: (state, { payload }: PayloadAction<Crop>) => {
-      state.products.push(payload);
+    addProduct: (state, { payload }: PayloadAction<Crops>) => {
+      state.products = { ...state.products, ...payload };
+    },
+    removeProduct: (
+      state,
+      { payload }: PayloadAction<CropFromServer["id"]>
+    ) => {
+      delete state.products[payload];
     },
   },
 });
 
-export const { addProduct } = preOrderSlice.actions;
+export const { addProduct, removeProduct } = preOrderSlice.actions;
 
 export default preOrderSlice.reducer;
