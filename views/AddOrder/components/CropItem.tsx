@@ -14,9 +14,7 @@ import { addCrop, removeCrop } from "@redux/features/preOrder/preOrderSlice";
 import type { ChangeEvent } from "react";
 import type { RootState } from "@redux/types";
 
-interface Props extends Crop {
-  readonly id: CropFromServer["id"];
-}
+interface Props extends Crop {}
 
 function CropItem({ name, time, cost, id, sellingPrice }: Props) {
   // hooks
@@ -26,7 +24,7 @@ function CropItem({ name, time, cost, id, sellingPrice }: Props) {
   // helper functions
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
-    const product: Crop = { name, time, cost, sellingPrice };
+    const product: Crop = { name, time, cost, sellingPrice, id };
     checked ? dispatch(addCrop({ [id]: product })) : dispatch(removeCrop(id));
   };
 
@@ -48,7 +46,7 @@ function CropItem({ name, time, cost, id, sellingPrice }: Props) {
 
           <Box flexBasis="100px" flexGrow={1}>
             <Heading as="h3" size="sm" textTransform="capitalize">
-              {name}{" "}
+              {name}
             </Heading>
             <Text fontSize="xs" textTransform="uppercase" color="gray.500">
               {prettyTime(time)}
