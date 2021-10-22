@@ -1,6 +1,7 @@
 const rtf = new Intl.RelativeTimeFormat("en", {
   style: "long",
   localeMatcher: "best fit",
+  numeric: "auto",
 });
 
 function prettyTime(time: number) {
