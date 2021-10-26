@@ -7,7 +7,7 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import { Layout, CropList } from "./components";
+import { Layout, CropList, FeedList } from "./components";
 
 // types
 interface Props {
@@ -37,20 +37,7 @@ function AddOrder({ crops, feeds }: Props) {
                   <CropList crops={crops} />
                 </TabPanel>
                 <TabPanel p={0} my={5}>
-                  <ul>
-                    {feeds.map(({ id, name, materials }) => (
-                      <li key={id}>
-                        {name}
-                        <ul>
-                          {materials.map(({ id, name, quantity }) => (
-                            <li key={id}>
-                              {name} - {quantity}
-                            </li>
-                          ))}
-                        </ul>
-                      </li>
-                    ))}
-                  </ul>
+                  <FeedList feeds={feeds} />
                 </TabPanel>
               </TabPanels>
             </Tabs>
